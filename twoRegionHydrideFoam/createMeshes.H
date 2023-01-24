@@ -24,8 +24,5 @@ fvMesh hydrogenArea
     )
 );
 
-if (myDebugControl == 1)
-{
-    Info<< "--> Meshes Created!" << endl;
-    Info<< "-------------------------" << endl;
-}
+Info<< "--> Meshes Created!" << endl;
+Info<< "-------------------------" << endl;

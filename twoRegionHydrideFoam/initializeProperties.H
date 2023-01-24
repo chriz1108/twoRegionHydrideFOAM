@@ -93,4 +93,10 @@ rhoCpEff_hydrogen = (1-epsilon_filter)*rho_filter*cp_filter + epsilon_filter*rho
 
 
 // define start value of massPercentAbsorp
-massPercentAbsorp0 = ((rhoMetal - rho_empty)/rho_empty)*100;
+forAll(massPercentAbsorp0, i)
+{
+    if (massPercentAbsorp0[i] == 0)
+    {
+        massPercentAbsorp0[i] = ((rhoMetal[i] - rho_empty.value())/rho_empty.value())*100;
+    }
+}

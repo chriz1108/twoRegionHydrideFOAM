@@ -181,8 +181,6 @@ dimensionedScalar p_eq_B
     metalHydrideSettings.lookup("p_eq_B")
 );
 
-if (myDebugControl == 1)
-{
-    Info<< "--> Dictionaries Read Successful!" << endl;
-    Info<< "-------------------------" << endl;
-}
+
+Info<< "--> Dictionaries Read Successful!" << endl;
+Info<< "-------------------------" << endl;
