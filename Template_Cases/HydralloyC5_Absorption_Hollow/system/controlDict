@@ -77,8 +77,8 @@ functions
 
             scalar printUnderFirstThreshold(0.1); // every x seconds
             scalar printAboveFirstThreshold(1);   // every x seconds
-            scalar printAboveSecondThreshold(1); // every x seconds
-            scalar printAboveThirdThreshold(10);  // every x seconds
+            scalar printAboveSecondThreshold(10); // every x seconds
+            scalar printAboveThirdThreshold(20);  // every x seconds
 
             label testingRuntimeValue(0);
             label testingWritingInterval(0);
