@@ -8,7 +8,7 @@ fvScalarMatrix TEqn
 fvm::ddt(rhoCpEff,T)
   + rhoGas*cp_gas * fvm::div(phi,T)
  ==
-    fvm::laplacian(lambda_Eff, T)
+    fvm::laplacian(k_Eff, T)
   + (
 	(selectedHydrideMaterial == "LaNi5" || selectedHydrideMaterial == "MmNiAl")
     ? (Sm_a * absorptionAllowed * (deltaH_a/M_hydrogen)

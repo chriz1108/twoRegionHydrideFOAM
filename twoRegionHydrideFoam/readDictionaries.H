@@ -139,22 +139,22 @@ dimensionedScalar M_metal
     subDict.lookup("M_metal")
 );
 
-//Info<< "Reading lambda_metal " << endl;
-dimensionedScalar lambda_metal
+//Info<< "Reading k_metal " << endl;
+dimensionedScalar k_metal
 (
-    subDict.lookup("lambda_metal")
+    subDict.lookup("k_metal")
 );
 
-//Info<< "Reading lambda_hydrogen " << endl;
-dimensionedScalar lambda_hydrogen
+//Info<< "Reading k_hydrogen " << endl;
+dimensionedScalar k_hydrogen
 (
-    hydrogenSubDict.lookup("lambda_hydrogen")
+    hydrogenSubDict.lookup("k_hydrogen")
 );
 
-//Info<< "Reading lambda_filter " << endl;
-dimensionedScalar lambda_filter
+//Info<< "Reading k_filter " << endl;
+dimensionedScalar k_filter
 (
-    hydrogenSubDict.lookup("lambda_filter")
+    hydrogenSubDict.lookup("k_filter")
 );
 
 //Info<< "Reading K_perm " << endl;

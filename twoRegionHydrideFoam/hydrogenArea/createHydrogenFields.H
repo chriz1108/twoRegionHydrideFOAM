@@ -102,19 +102,19 @@ volScalarField rhoCpEff_hydrogen
     dimensionedScalar("rhoCpEff_hydrogen", dimensionSet(1,-1,-2,-1,0,0,0), 0)
 );
 
-//Info<< "Creating field lambda_Eff_hydrogen" << endl;
-volScalarField lambda_Eff_hydrogen
+//Info<< "Creating field k_Eff_hydrogen" << endl;
+volScalarField k_Eff_hydrogen
 (
     IOobject
     (
-        "lambda_Eff_hydrogen",
+        "k_Eff_hydrogen",
         runTime.timeName(),
         hydrogenArea,
         IOobject::NO_READ,
         IOobject::NO_WRITE
     ),
     hydrogenArea,
-    dimensionedScalar("lambda_Eff_hydrogen", dimensionSet(1,1,-3,-1,0,0,0), 0)
+    dimensionedScalar("k_Eff_hydrogen", dimensionSet(1,1,-3,-1,0,0,0), 0)
 );
 
 //------------------------------------------------------

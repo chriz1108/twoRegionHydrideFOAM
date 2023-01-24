@@ -253,19 +253,19 @@ volScalarField rhoCpEff
     dimensionedScalar("rhoCpEff", dimensionSet(1,-1,-2,-1,0,0,0), 0)
 );
 
-//Info<< "Creating field lambda_Eff" << endl;
-volScalarField lambda_Eff
+//Info<< "Creating field k_Eff" << endl;
+volScalarField k_Eff
 (
     IOobject
     (
-        "lambda_Eff",
+        "k_Eff",
         runTime.timeName(),
         metalArea,
         IOobject::READ_IF_PRESENT,
         IOobject::AUTO_WRITE
     ),
     metalArea,
-    dimensionedScalar("lambda_Eff", dimensionSet(1,1,-3,-1,0,0,0), 0)
+    dimensionedScalar("k_Eff", dimensionSet(1,1,-3,-1,0,0,0), 0)
 );
 
 //Info<< "Creating field absorptionAllowed" << endl;

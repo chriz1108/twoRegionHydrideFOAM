@@ -8,7 +8,7 @@ fvScalarMatrix TEqn_hydrogen
 	+ rhoGas_hydrogen*cp_gas
      * fvm::div(phi_hydrogen,T_hydrogen)
   ==
-     fvm::laplacian(lambda_Eff_hydrogen, T_hydrogen)
+     fvm::laplacian(k_Eff_hydrogen, T_hydrogen)
 );
 
 TEqn_hydrogen.solve();

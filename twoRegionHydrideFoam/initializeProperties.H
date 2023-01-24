@@ -72,8 +72,8 @@ dimensionedScalar correctorMu("correctorMu", dimensionSet(1,-1,-1,0,0,0,0), 1.0)
 */
 dimensionedScalar rho_sat ("rho_sat", dimensionSet(1,-3,0,0,0,0,0), 0.0);
 rho_sat.value() = floor(rho_empty.value() * (1+maxHAbsorp.value()/100));
-lambda_Eff = epsilon*lambda_hydrogen + (1-epsilon)*lambda_metal;
-lambda_Eff_hydrogen = epsilon_filter*lambda_hydrogen + (1-epsilon_filter)*lambda_filter;
+k_Eff = epsilon*k_hydrogen + (1-epsilon)*k_metal;
+k_Eff_hydrogen = epsilon_filter*k_hydrogen + (1-epsilon_filter)*k_filter;
 //-----------------------------------------------------------------------------
 
 
