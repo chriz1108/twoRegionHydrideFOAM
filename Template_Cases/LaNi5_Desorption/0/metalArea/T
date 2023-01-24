@@ -25,10 +25,10 @@ boundaryField
     tankWall
     {
       type                groovyBC;
-      variables           "lambda_eff=$epsilon_metal*$lambda_hydrogen+(1-$epsilon_metal)*$lambda_metal;";
+      variables           "k_eff=$epsilon_metal*$k_hydrogen+(1-$epsilon_metal)*$k_metal;";
       valueExpression     "293.15";
       gradientExpression  "0";
-      fractionExpression  "1/(1+(lambda_eff/($h_metal*mag(delta())))*(($lambda_wall+$h_metal*$delta_wall)/$lambda_wall))";
+      fractionExpression  "1/(1+(k_eff/($h_metal*mag(delta())))*(($k_wall+$h_metal*$delta_wall)/$k_wall))";
       value               $internalField;
     }
 
