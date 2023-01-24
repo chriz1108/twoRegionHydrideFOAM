@@ -1,0 +1,67 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2112                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      metalHydrideSettings;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+#include "../system/blockMeshDict";
+
+/*
+	Metal definition
+	(HydralloyC5, LaNi5, MgH2, MgNi, HWT5800, MmNiFe, MmNiAl)
+*/
+material "HydralloyC5";
+/* ---------------------------------------------------------------- */
+
+
+/*
+	Heat Transfer (for groovyBC)
+*/
+// Copy these from hydrideMaterialConfig
+lambda_hydrogen   0.1672;   /* [W/m*K] */
+lambda_metal      1;        /* [W/m*K] */
+lambda_filter     40;       /* [W/m*K] */
+epsilon_metal     0.71;     /* [-] */
+epsilon_filter    0.6;      /* [-] */
+
+// New entries
+// This depends on your needs and can be freely chosen
+h_metal           1652;     /* [W/m^2*K] */  // Boukhari
+h_hydrogen        10;       /* [W/m^2*K] */ // Kosky
+T_inf             293.15;   /* [K] */
+lambda_wall       21;       /* [W/m*K] */
+
+// This is automatically read from blockMeshDict
+// Customize the factor "1e-3" to suit your needs.
+delta_wall        #calc "$wallThickness * 1e-3";
+/* ---------------------------------------------------------------- */
+
+
+/*
+	Equilibrium Pressure
+	0: Vant Hoff (Allrounder)
+	1: LaNi5
+	2: Hydralloy C5
+	3: VantHoff-AB (define p_eq_A & p_eq_B for this!)
+*/
+peq_control     2;
+p_eq_A   p_eq_A   [0 0 0 0 0 0 0]  12.95;   // Boukhari
+p_eq_B   p_eq_B   [0 0 0 0 0 0 0]  3731.42; // Boukhari
+/* ---------------------------------------------------------------- */
+
+
+/*
+	Debug
+*/
+myDebugControl  0; // 0: off, 1: on
+/* ---------------------------------------------------------------- */
