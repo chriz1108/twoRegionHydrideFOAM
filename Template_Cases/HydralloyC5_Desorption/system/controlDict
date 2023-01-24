@@ -1,0 +1,160 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     twoRegionHydrideFoam;
+
+startFrom       latestTime;//startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         500;
+deltaT          0.01;
+
+writeControl    timeStep;
+
+writeInterval   1000000;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+
+libs (
+    "libgroovyBC.so"
+);
+
+functions
+{
+    userWriteInterval
+    {
+        type coded;
+        region metalArea;
+        libs ("libutilityFunctionObjects.so");
+        name writeInterval;
+
+        code
+        #{
+        #};
+
+        codeExecute
+        #{
+            const Time& runTime = mesh().time();
+            scalar myWriteInterval(0);
+            scalar firstThreshold(1);
+            scalar secondThreshold(4);
+            scalar thirdThreshold(20);
+
+            scalar deltaTUnderFirstThreshold(0.001); // timestep
+            scalar deltaTAboveFirstThreshold(0.001); // timestep
+            scalar deltaTAboveSecondThreshold(0.01); // timestep
+            scalar deltaTAboveThirdThreshold(0.1);  // timestep
+
+            scalar printUnderFirstThreshold(0.1); // every x seconds
+            scalar printAboveFirstThreshold(1);   // every x seconds
+            scalar printAboveSecondThreshold(1); // every x seconds
+            scalar printAboveThirdThreshold(10);  // every x seconds
+
+            label testingRuntimeValue(0);
+            label testingWritingInterval(0);
+
+            scalar myDebug(0);
+
+            if (label(floor((runTime.value()+0.005)*100)) > thirdThreshold*100) // > 100 s
+            {
+                const_cast<Time&>(runTime).setDeltaT(deltaTAboveThirdThreshold);
+                myWriteInterval = printAboveThirdThreshold/deltaTAboveThirdThreshold;
+            }
+            else if (label(floor((runTime.value()+0.005)*100)) > secondThreshold*100) // > 10 s
+            {
+                const_cast<Time&>(runTime).setDeltaT(deltaTAboveSecondThreshold);
+                myWriteInterval = printAboveSecondThreshold/deltaTAboveSecondThreshold;
+            }
+            else if (label(floor((runTime.value()+0.005)*100)) > firstThreshold*100) // > 1 s
+            {
+                const_cast<Time&>(runTime).setDeltaT(deltaTAboveFirstThreshold);
+                myWriteInterval = printAboveFirstThreshold/deltaTAboveFirstThreshold;
+            }
+            else // <= 1 s
+            {
+                const_cast<Time&>(runTime).setDeltaT(deltaTUnderFirstThreshold);
+                myWriteInterval = printUnderFirstThreshold/deltaTUnderFirstThreshold; //printUnderFirstThreshold*100;
+            }
+
+            if (runTime.value() > 0)
+            {
+                if (runTime.deltaTValue() <= 1e-3)
+                {
+                    testingRuntimeValue = label(floor((runTime.value()+0.0005)*1000.0));
+                }
+                else if (runTime.deltaTValue() <= 1e-2)
+                {
+                    testingRuntimeValue = label(floor((runTime.value()+0.005)*100.0));
+                }
+                else if (runTime.deltaTValue() <= 1e-1)
+                {
+                    testingRuntimeValue = label(floor((runTime.value()+0.05)*10.0));
+                }
+                if (!(testingRuntimeValue % label(myWriteInterval)))
+                {
+                    const_cast<Time&>(runTime).writeNow();
+                    if (myDebug == 1)
+                    {
+                        Info<< "\n---PRINTED---" << nl << endl;
+                    }
+
+                    if (label(floor((runTime.value()+0.005)*100)) >= thirdThreshold*100) // >= 100 s
+                    {
+                        const_cast<Time&>(runTime).setDeltaT(deltaTAboveThirdThreshold);
+                    }
+                    else if (label(floor((runTime.value()+0.005)*100)) >= secondThreshold*100) // >= 10 s
+                    {
+                        const_cast<Time&>(runTime).setDeltaT(deltaTAboveSecondThreshold);
+                    }
+                    else if (label(floor((runTime.value()+0.005)*100)) >= firstThreshold*100) // >= 1 s
+                    {
+                        const_cast<Time&>(runTime).setDeltaT(deltaTAboveFirstThreshold);
+                    }
+                }
+            }
+
+            if (myDebug == 1)
+            {
+              Info<< "runTime.value(): " << runTime.value() << endl;
+              Info<< "Print Floor: " << label(floor((runTime.value()+0.005)*100.0)) <<  endl;
+              Info<< "myWriteInterval: " << myWriteInterval << endl;
+              Info<< "testingRuntimeValue: " << testingRuntimeValue << endl;
+              Info<< "testingWritingInterval: " << testingWritingInterval << endl;
+              Info<< "runTime.startTimeIndex(): " << runTime.startTimeIndex() << endl;
+            }
+        #};
+    }
+}
+
+
+// ************************************************************************* //

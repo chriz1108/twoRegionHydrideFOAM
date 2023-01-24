@@ -1,0 +1,170 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2112                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      hydrideMaterialConfig;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+                          //  kg  m   s   K   mol A   cd
+H2 // Hydrogen & Hydrogen Area
+{
+    M_hydrogen    M_hydrogen  [1  0   0   0  -1   0   0]   /* [kg/mole] */  2.01588e-3; // Macdonald & Rowe
+    cp_gas        cp_gas      [0  2  -2  -1   0   0   0]   /* [J/kg*K] */   14890;    // Macdonald & Rowe
+    cp_filter     cp_filter   [0  2  -2  -1   0   0   0]   /* [J/kg*K] */   920;      // Schweizer-FN (AlSi7Mg)
+    lambda_hydrogen   lambda_hydrogen [1  1  -3  -1   0   0   0]   /* [W/m*K] */    0.1672;   // Busque
+    lambda_filter  lambda_filter      [1  1  -3  -1   0   0   0] /*[W/m*K]*/ 40;       // Exxentis (Porengroesse Nr. 2)
+    K_perm_hydrogen  K_perm_hydrogen  [0  2   0   0   0   0   0] /* [m^2]*/  8.5e-12;  // Exxentis
+    epsilon_filter epsilon_filter     [0  0   0   0   0   0   0]   /* [-] */ 0.6;      // Exxentis
+    rho_filter    rho_filter  [1 -3   0   0   0   0   0]   /* [kg/m^3] */   1100;     // Exxentis
+    R             R           [1  2  -2  -1  -1   0   0]   /* [J/mole*K]*/  8.3145;
+    p_ref         p_ref       [1 -1  -2   0   0   0   0]   /* [Pa] */       101325; // 101325 = 1 atm
+    T_ref         T_ref       [0  0   0   1   0   0   0]   /* [K] */        303.15; // Nam
+}
+
+// Metal Hydrides * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+HydralloyC5 // Ti0.95Zr0.05Mn1.46V0.45Fe0.09
+{
+    epsilon       epsilon     [0  0   0   0   0   0   0]   /* [-] */        0.71; // Herbrig
+    cp_metal      cp_metal    [0  2  -2  -1   0   0   0]   /* [J/kg*K] */   500;  // Herbrig
+    rho_empty     rho_empty   [1 -3   0   0   0   0   0]   /* [kg/m^3] */   6100; // Herbrig
+    maxHAbsorp    maxHAbsorp  [0  0   0   0   0   0   0]   /* [wt%] */      1.8; // Skripnyuk
+    C_a           C_a         [0  0  -1   0   0   0   0]   /* [1/s] */      6e6; // Herbrig
+    C_d           C_d         [0  0  -1   0   0   0   0]   /* [1/s] */      1.08; // Skripnyuk
+    deltaH_a      deltaH_a    [1  2  -2   0  -1   0   0]   /* [J/mole] */   22.3e3; // Herbrig
+    deltaH_d      deltaH_d    [1  2  -2   0  -1   0   0]   /* [J/mole] */   28.4e3; // Herbrig
+    deltaS_a      deltaS_a    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 95.3; // Herbrig
+    deltaS_d      deltaS_d    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 112; // Herbrig
+    E_a           E_a         [1  2  -2   0  -1   0   0]   /* [J/mole] */   40e3; // Skripnyuk / Herbrig
+    E_d           E_d         [1  2  -2   0  -1   0   0]   /* [J/mole] */   30e3; // Skripnyuk
+    lambda_metal  lambda_metal [1  1  -3  -1   0   0   0]  /* [W/m*K] */    1; // Herbrig
+    K_perm        K_perm      [0  2   0   0   0   0   0]   /* [m^2] */      8.1e-15; // Herbrig
+    M_metal       M_metal     [1  0   0   0  -1   0   0]   /* [kg/mole] */  158.194e-3; // https://www.webqc.org/molecular-weight-of-TiZrMnVFe.html
+}
+LaNi5
+{
+    epsilon       epsilon     [0  0   0   0   0   0   0]   /* [-] */        0.63; // Nam
+    cp_metal      cp_metal    [0  2  -2  -1   0   0   0]   /* [J/kg*K] */   419;  // Nam
+    rho_empty     rho_empty   [1 -3   0   0   0   0   0]   /* [kg/m^3] */   5300; // Nam
+    maxHAbsorp    maxHAbsorp  [0  0   0   0   0   0   0]   /* [wt%] */      1.3;  // Nam
+    C_a           C_a         [0  0  -1   0   0   0   0]   /* [1/s] */      59.187; // Nam
+    C_d           C_d         [0  0  -1   0   0   0   0]   /* [1/s] */      9.57; // Busque
+    deltaH_a      deltaH_a    [1  2  -2   0  -1   0   0]   /* [J/mole] */   29.879e3; // Busque
+    deltaH_d      deltaH_d    [1  2  -2   0  -1   0   0]   /* [J/mole] */   35.620e3; // Busque
+    deltaS_a      deltaS_a    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 108; // Busque
+    deltaS_d      deltaS_d    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 108; // Busque
+    E_a           E_a         [1  2  -2   0  -1   0   0]   /* [J/mole] */   21179.6; // Nam
+    E_d           E_d         [1  2  -2   0  -1   0   0]   /* [J/mole] */   23879.6; // Busque
+    lambda_metal  lambda_metal [1  1  -3  -1   0   0   0]  /* [W/m*K] */    3.18; // Nam
+    K_perm        K_perm      [0  2   0   0   0   0   0]   /* [m^2] */      1e-8; // Nam
+    M_metal       M_metal     [1  0   0   0  -1   0   0]   /* [kg/mole] */  432.375e-3; // https://www.webqc.org/molecular-weight-of-LaNi5.html
+}
+MgH2
+{
+    epsilon       epsilon     [0  0   0   0   0   0   0]   /* [-] */        0.77; // Lahmer
+    cp_metal      cp_metal    [0  2  -2  -1   0   0   0]   /* [J/kg*K] */   1545; // Lahmer
+    rho_empty     rho_empty   [1 -3   0   0   0   0   0]   /* [kg/m^3] */   1800; // Bao
+    maxHAbsorp    maxHAbsorp  [0  0   0   0   0   0   0]   /* [wt%] */      6;    // Bao
+    C_a           C_a         [0  0  -1   0   0   0   0]   /* [1/s] */      2.9e8; // Bao
+    C_d           C_d         [0  0  -1   0   0   0   0]   /* [1/s] */      10; // Chaise
+    deltaH_a      deltaH_a    [1  2  -2   0  -1   0   0]   /* [J/mole] */   124; // Bao
+    deltaH_d      deltaH_d    [1  2  -2   0  -1   0   0]   /* [J/mole] */   124;
+    deltaS_a      deltaS_a    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 135.6; // Lahmer & Chaise & Bao
+    deltaS_d      deltaS_d    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 135.6;
+    E_a           E_a         [1  2  -2   0  -1   0   0]   /* [J/mole] */   130e3; // Lahmer & Chaise
+    E_d           E_d         [1  2  -2   0  -1   0   0]   /* [J/mole] */   130e3;
+    lambda_metal  lambda_metal [1  1  -3  -1   0   0   0]  /* [W/m*K] */    0.48;  // Lahmer & Chaise
+    K_perm        K_perm      [0  2   0   0   0   0   0]   /* [m^2] */      1.7e-15; // Bao
+    M_metal       M_metal     [1  0   0   0  -1   0   0]   /* [kg/mole] */  24.305e-3; // https://www.webqc.org/molecular-weight-of-Mg.html
+}
+MgNi
+{
+    epsilon       epsilon     [0  0   0   0   0   0   0]   /* [-] */        0.5; // Larpruenrudee
+    cp_metal      cp_metal    [0  2  -2  -1   0   0   0]   /* [J/kg*K] */   1414; // Larpruenrudee
+    rho_empty     rho_empty   [1 -3   0   0   0   0   0]   /* [kg/m^3] */   3200; // Larpruenrudee
+    maxHAbsorp    maxHAbsorp  [0  0   0   0   0   0   0]   /* [wt%] */      3.6; // Larpruenrudee
+    C_a           C_a         [0  0  -1   0   0   0   0]   /* [1/s] */      175; // Larpruenrudee
+    C_d           C_d         [0  0  -1   0   0   0   0]   /* [1/s] */      175;
+    deltaH_a      deltaH_a    [1  2  -2   0  -1   0   0]   /* [J/mole] */   6336; // Larpruenrudee
+    deltaH_d      deltaH_d    [1  2  -2   0  -1   0   0]   /* [J/mole] */   6336;
+    deltaS_a      deltaS_a    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 120.84; // Larpruenrudee
+    deltaS_d      deltaS_d    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 120.84;
+    E_a           E_a         [1  2  -2   0  -1   0   0]   /* [J/mole] */   49.674e3; // Larpruenrudee
+    E_d           E_d         [1  2  -2   0  -1   0   0]   /* [J/mole] */   49.674e3;
+    lambda_metal  lambda_metal [1  1  -3  -1   0   0   0]  /* [W/m*K] */    1;  // Larpruenrudee
+    K_perm        K_perm      [0  2   0   0   0   0   0]   /* [m^2] */      1e-8; // Larpruenrudee
+    M_metal       M_metal     [1  0   0   0  -1   0   0]   /* [kg/mole] */  107.3e-3; // Larpruenrudee
+}
+HWT5800 // Ti0.98 Zr0.02 V0.43 Fe0.06 Cr0.05 Mn1.52
+{
+    epsilon       epsilon     [0  0   0   0   0   0   0]   /* [-] */        0.585;  // Lin
+    cp_metal      cp_metal    [0  2  -2  -1   0   0   0]   /* [J/kg*K] */   474;    // Lin
+    rho_empty     rho_empty   [1 -3   0   0   0   0   0]   /* [kg/m^3] */   6070;   // Hahne
+    maxHAbsorp    maxHAbsorp  [0  0   0   0   0   0   0]   /* [wt%] */      1.87;   // Hahne
+    C_a           C_a         [0  0  -1   0   0   0   0]   /* [1/s] */      0.56;   // Lin
+    C_d           C_d         [0  0  -1   0   0   0   0]   /* [1/s] */      0.56;   // Lin
+    deltaH_a      deltaH_a    [1  2  -2   0  -1   0   0]   /* [J/mole] */   22.9e3; // Lin
+    deltaH_d      deltaH_d    [1  2  -2   0  -1   0   0]   /* [J/mole] */   28.4e3; // Saetre
+    deltaS_a      deltaS_a    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 104.1;   // Hahne
+    deltaS_d      deltaS_d    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 116;    // Saetre
+    E_a           E_a         [1  2  -2   0  -1   0   0]   /* [J/mole] */   35e3; // assumed (Skripnyuk)
+    E_d           E_d         [1  2  -2   0  -1   0   0]   /* [J/mole] */   35e3; // assumed (Skripnyuk)
+    lambda_metal  lambda_metal [1  1  -3  -1   0   0   0]  /* [W/m*K] */    12;    // Hahne
+    K_perm        K_perm      [0  2   0   0   0   0   0]   /* [m^2] */      3.1e-12; // Lin
+    M_metal       M_metal     [1  0   0   0  -1   0   0]   /* [kg/mole] */  160.09e-3; // https://de.webqc.org/molecular-weight-of-TiZrVFeCrMn.html + Saetre + Hahne
+}
+MmNiFe // MmNi4.6Fe0.4
+{
+    epsilon       epsilon     [0  0   0   0   0   0   0]   /* [-] */        0.5;  // Boukhari
+    cp_metal      cp_metal    [0  2  -2  -1   0   0   0]   /* [J/kg*K] */   419;  // Boukhari
+    rho_empty     rho_empty   [1 -3   0   0   0   0   0]   /* [kg/m^3] */   8500; // Boukhari
+    maxHAbsorp    maxHAbsorp  [0  0   0   0   0   0   0]   /* [wt%] */      1.6;  // Boukhari
+    C_a           C_a         [0  0  -1   0   0   0   0]   /* [1/s] */      475;  // Boukhari
+    C_d           C_d         [0  0  -1   0   0   0   0]   /* [1/s] */      475;  // Boukhari
+    deltaH_a      deltaH_a    [1  2  -2   0  -1   0   0]   /* [J/mole] */   27.5e3; // Boukhari
+    deltaH_d      deltaH_d    [1  2  -2   0  -1   0   0]   /* [J/mole] */   27.5e3; // Boukhari
+    deltaS_a      deltaS_a    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 105;   // Boukhari
+    deltaS_d      deltaS_d    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 105;   // Boukhari
+    E_a           E_a         [1  2  -2   0  -1   0   0]   /* [J/mole] */   25e3;  // Boukhari
+    E_d           E_d         [1  2  -2   0  -1   0   0]   /* [J/mole] */   25e3;  // Boukhari
+    lambda_metal  lambda_metal [1  1  -3  -1   0   0   0]  /* [W/m*K] */    1.6;   // Boukhari
+    K_perm        K_perm      [0  2   0   0   0   0   0]   /* [m^2] */      1e-8; // Boukhari
+    M_metal       M_metal     [1  0   0   0  -1   0   0]   /* [kg/mole] */  853.9546e-3; // Singh & Ramadesigan + American Elements + webgc.org
+}
+MmNiAl // MmNi6.4Al0.4
+{
+    epsilon       epsilon     [0  0   0   0   0   0   0]   /* [-] */        0.5;  // Muthukumar
+    cp_metal      cp_metal    [0  2  -2  -1   0   0   0]   /* [J/kg*K] */   419;  // Muthukumar
+    rho_empty     rho_empty   [1 -3   0   0   0   0   0]   /* [kg/m^3] */   8400; // Muthukumar
+    maxHAbsorp    maxHAbsorp  [0  0   0   0   0   0   0]   /* [wt%] */      1.4;  // Muthukumar
+    C_a           C_a         [0  0  -1   0   0   0   0]   /* [1/s] */      75;   // Muthukumar
+    C_d           C_d         [0  0  -1   0   0   0   0]   /* [1/s] */      75;   // Muthukumar
+    deltaH_a      deltaH_a    [1  2  -2   0  -1   0   0]   /* [J/mole] */   28e3; // Muthukumar
+    deltaH_d      deltaH_d    [1  2  -2   0  -1   0   0]   /* [J/mole] */   28e3; // Muthukumar
+    deltaS_a      deltaS_a    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 107.2; // Muthukumar
+    deltaS_d      deltaS_d    [1  2  -2  -1  -1   0   0]   /* [J/mole*K] */ 107.2; // Muthukumar
+    E_a           E_a         [1  2  -2   0  -1   0   0]   /* [J/mole] */   21.17e3; // Muthukumar
+    E_d           E_d         [1  2  -2   0  -1   0   0]   /* [J/mole] */   21.17e3; // Muthukumar
+    lambda_metal  lambda_metal [1  1  -3  -1   0   0   0]  /* [W/m*K] */    1.6; // Muthukumar
+    K_perm        K_perm      [0  2   0   0   0   0   0]   /* [m^2] */      1e-8; // assumed
+    M_metal       M_metal     [1  0   0   0  -1   0   0]   /* [kg/mole] */  948.057e-3; // Muthukumar + webgc.org
+}
+
+
+
+/* for simplicity - SI-units of several common non-SI units:
+kg  m   s   K   mol A   cd
+[1  -1  -2  0   0   0   0] =  [Pa]
+[1  2   -2  0   0   0   0] =  [J]
+[1  1   -3  -1  0   0   0] =  [W/m*K]*/
+// ************************************************************************* //
+
+/* ---------------------------------------------------------------- */
