@@ -1,0 +1,58 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+	  location    "0/hydrogenArea";
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+#include "../../constant/metalHydrideSettings";
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 293.15;
+
+
+boundaryField
+{
+    tankWall
+    {
+      type                groovyBC;
+      variables           "k_eff=$epsilon_filter*$k_hydrogen+(1-$epsilon_filter)*$k_filter;";
+      valueExpression     "293.15";
+      gradientExpression  "0";
+      fractionExpression  "1/(1+(k_eff/($h_metal*mag(delta())))*(($k_wall+$h_metal*$delta_wall)/$k_wall))";
+      value               $internalField;
+    }
+
+    inlet
+    {
+      type                groovyBC;
+      variables           "k_eff=$epsilon_filter*$k_hydrogen+(1-$epsilon_filter)*$k_filter;";
+      valueExpression     "293.15";
+      gradientExpression  "0";
+      fractionExpression  "1/(1+(k_eff/($h_hydrogen*mag(delta()))))";
+      value               $internalField;
+    }
+
+    "(front|back)"
+    {
+        type            wedge;
+    }
+
+    hydrogenArea_to_metalArea
+    {
+        type            fixedValue;
+        value           $internalField;
+    }
+}
+
+// ************************************************************************* //
