@@ -1,0 +1,59 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       polyBoundaryMesh;
+    location    "constant/hydrogenArea/polyMesh";
+    object      boundary;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+5
+(
+    front
+    {
+        type            wedge;
+        inGroups        List<word> 1(wedge);
+        nFaces          240;
+        startFace       446;
+    }
+    back
+    {
+        type            wedge;
+        inGroups        List<word> 1(wedge);
+        nFaces          240;
+        startFace       686;
+    }
+    tankWall
+    {
+        type            wall;
+        inGroups        List<word> 1(wall);
+        nFaces          10;
+        startFace       926;
+    }
+    inlet
+    {
+        type            patch;
+        nFaces          24;
+        startFace       936;
+    }
+    hydrogenArea_to_metalArea
+    {
+        type            mappedWall;
+        inGroups        List<word> 1(wall);
+        nFaces          24;
+        startFace       960;
+        sampleMode      nearestPatchFace;
+        sampleRegion    metalArea;
+        samplePatch     metalArea_to_hydrogenArea;
+    }
+)
+
+// ************************************************************************* //
